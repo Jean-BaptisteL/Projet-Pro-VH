@@ -1,0 +1,73 @@
+/*bare de navigation*/
+#navbar{
+    z-index: 3;
+    margin-bottom: 20px;
+}
+.sticky{
+  position : fixed;
+  top: 0;
+  width: 100%;
+}
+#searchBtn:hover{
+  background-color: #b8b3b3;
+  color : white;
+  border-color: #b8b3b3;
+}
+/*corps de la page*/
+.articlesPresentation{
+    margin-bottom: 20px;
+    padding: 10px;
+}
+.articleDescription{
+    background-color: rgba(19, 64, 116, 0.7);
+}
+article{
+    background-color: rgba(19, 64, 116, 0.4);
+    padding: 10px;
+}
+/*Formulaire*/
+.registration{
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+.inputsRegistration{
+    border: 1px solid #0069D9;
+    border-radius: 5px;
+    padding: 10px;
+}
+/*footer*/
+#facebookIcon{
+  font-size: 2em;
+  color: black;
+}
+#facebook{
+  width: 50px;
+  height: 50px;
+  background-color: grey;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+#instagramIcon{
+  font-size: 2em;
+  color: black;
+}
+#instagram{
+  width: 50px;
+  height: 50px;
+  background-color: grey;
+  border-radius: 5px;
+}
+#twitterIcon{
+  font-size: 2em;
+  color: black;
+}
+#twitter{
+  width: 50px;
+  height: 50px;
+  background-color: grey;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+.socialNetwork{
+  display: flex;
+}
