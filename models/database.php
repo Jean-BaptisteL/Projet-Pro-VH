@@ -13,7 +13,6 @@ class database {
     /**
      * Méthode qui permet de récupérer l'instance PDO si elle existe sinon,
      * elle en crée une.
-     * Cette méthode est statique, c-à-d qu'on ne peut pas l'appeler via l'instanciation.
      * @return objet
      */
     public static function getInstance(){
