@@ -1,11 +1,10 @@
 <?php
 $pageTitle = 'Inscription';
 include_once 'includes/header.php';
-include_once 'models/users.php';
 include_once 'controllers/formCtrl.php';
 ?>
 <h2 class="registration">Inscription :</h2>
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+<form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
     <div class="form-group d-flex justify-content-center form-row inputsRegistration">
         <div class="col-md-4">
             <label for="pseudo">Donnez un pseudonyme :</label><input type="text" name="pseudo" id="pseudo" class="form-control" placeholder="Capitaine Gloomy" value="<?= isset($_POST['pseudo']) ? $_POST['pseudo'] : '' ?>" required />
@@ -25,6 +24,7 @@ include_once 'controllers/formCtrl.php';
         </div>
     </div>
     <input type="submit" id="addNewUser" name="addNewUser" class="btn btn-primary align-self-center" value="Enregistrer" />
+    <p><?= isset($errorMessages['success']) ? $errorMessages['success'] : '' ?></p>
 </form>
 <?php
 include_once 'includes/footer.php'; 

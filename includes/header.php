@@ -1,3 +1,8 @@
+<?php
+session_start();
+include_once 'models/users.php';
+include_once 'controllers/headerCtrl.php';
+?>
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
     <head>
@@ -25,7 +30,7 @@
                             <a class="nav-intem nav-link m-0" href="#">Vos spots</a>
                         </div>
                         <div class="navbar-nav ml-auto">
-                            <form class="form-inline">
+                            <form class="form-inline" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Rechercher" name="search">
                                     <div class="input-group-btn">
@@ -49,8 +54,15 @@
                         </div>
                         <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                             <div class="modal-body row">
-                                <label for="userName">Identifiant :</label><input type="text" class="col-10" name="userName" id="userName" placeholder="Capitaine Gloomy" />
+                                <p><?= isset($errorOrSuccessLogin) ? $errorOrSuccessLogin : '' ?></p>
+                                <div>
+                                <label for="userName">Identifiant ou adresse mail :</label><input type="text" class="col-10" name="userNameOrEmail" id="userNameOrEmail" />
+                                <p><?= isset($errorMessagesForLogin['userNameOrEmail']) ? $errorMessagesForLogin['userNameOrEmail'] : '' ?></p>
+                                </div>
+                                <div>
                                 <label for="userPassword">Mot de passe :</label><input type="password" class="col-10" name="userPassword" id="userPassword" />
+                                <p><?= isset($errorMessagesForLogin['userPassword']) ? $errorMessagesForLogin['userPassword'] : '' ?></p>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>

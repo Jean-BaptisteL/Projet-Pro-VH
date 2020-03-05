@@ -7,7 +7,7 @@ class users {
     public $email = '';
     public $password = '';
     public $hash = '';
-    public $usersTypeId = 1;
+    public $usersTypesId = 1;
     public $db = NULL;
     
     public function __construct() {
@@ -26,7 +26,7 @@ class users {
         $statement->bindValue(':email', $this->email, PDO::PARAM_STR);
         $statement->bindValue(':password', $this->password, PDO::PARAM_STR);
         $statement->bindValue(':hash', $this->hash, PDO::PARAM_STR);
-        $statement->bindValue(':usersTypesId', $this->usersTypesId, PDO::PARAM_STR);
+        $statement->bindValue(':usersTypesId', $this->usersTypesId, PDO::PARAM_INT);
         return $statement->execute();
     }
     
@@ -43,4 +43,20 @@ class users {
         $statement->execute();
         return $statement->fetch(PDO::FETCH_OBJ);
     }
+    
+    /**
+     * Méthode permettant de récupérer les informations d'un utilisateur
+     * @return OBJ
+     */
+    public function getUserInfo() {
+        $query = 'SELECT `id`, `name`, `password` FROM `zui5e_users` '
+                . 'WHERE `name` = :name OR `email` = :email';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
+        $statement->bindValue(':email', $this->email, PDO::PARAM_STR);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_OBJ);
+    }
+    
+    
 }
