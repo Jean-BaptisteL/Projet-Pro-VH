@@ -1,4 +1,5 @@
 <?php
+session_start();
 $pageTitle = 'Projet Drone';
 include_once 'includes/header.php';
 ?>

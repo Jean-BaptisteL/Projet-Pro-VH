@@ -1,4 +1,6 @@
 <?php
+
+session_start();
 $pageTitle = 'Inscription';
 include_once 'includes/header.php';
 include_once 'controllers/formCtrl.php';

@@ -1,5 +1,4 @@
 <?php
-session_start();
 include_once 'models/users.php';
 include_once 'controllers/headerCtrl.php';
 ?>
@@ -24,7 +23,7 @@ include_once 'controllers/headerCtrl.php';
                     <div class="collapse navbar-collapse" id="navigationBar">
                         <div class="navbar-nav">
                             <a class="nav-intem nav-link m-0" href="#">Tutos</a>
-                            <a class="nav-intem nav-link m-0" href="indexTest.php">Testes</a>
+                            <a class="nav-intem nav-link m-0" href="indexTest.php">Tests</a>
                             <a class="nav-intem nav-link m-0" href="#">Vos réalisations</a>
                             <a class="nav-intem nav-link m-0" href="#">Forum</a>
                             <a class="nav-intem nav-link m-0" href="#">Vos spots</a>
@@ -39,8 +38,8 @@ include_once 'controllers/headerCtrl.php';
                                         </button>
                                     </div>
                             </form>
-                            <a class="nav-intem nav-link m-0" href="form.php"><i class="fas fa-user-plus"></i> Inscription</a>
-                            <a class="nav-intem nav-link m-0" href="#" data-toggle="modal" data-target="#loginModal"><i class="fas fa-sign-in-alt"></i> Connexion</a>
+                            <a class="nav-intem nav-link m-0" href="<?= isset($_SESSION['user']) ? 'userProfil.php?display=infos' : 'form.php' ?>"><i class="<?= isset($_SESSION['user']) ? 'fas fa-user' : 'fas fa-user-plus' ?>"></i><?= isset($_SESSION['user']) ? ' Mon profil' : ' Inscription' ?></a>
+                            <a class="nav-intem nav-link m-0" href="<?= isset($_SESSION['user']) ? '?signOut=true' : '#' ?>" <?= isset($_SESSION['user']) ? '' : 'data-toggle="modal" data-target="#loginModal"' ?>><i class="<?= isset($_SESSION['user']) ? 'fas fa-sign-out-alt' : ' fas fa-sign-in-alt' ?>"></i><?= isset($_SESSION['user']) ? ' Déconnexion' : ' Connexion' ?></a>
                         </div>
                     </div>
                 </nav>
@@ -54,14 +53,14 @@ include_once 'controllers/headerCtrl.php';
                         </div>
                         <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                             <div class="modal-body row">
-                                <p><?= isset($errorOrSuccessLogin) ? $errorOrSuccessLogin : '' ?></p>
+                                <p><?= isset($errorMessagesForLogin['errorLogin']) ? $errorMessagesForLogin['errorLogin'] : '' ?></p>
                                 <div>
-                                <label for="userName">Identifiant ou adresse mail :</label><input type="text" class="col-10" name="userNameOrEmail" id="userNameOrEmail" />
-                                <p><?= isset($errorMessagesForLogin['userNameOrEmail']) ? $errorMessagesForLogin['userNameOrEmail'] : '' ?></p>
+                                    <label for="userName">Identifiant ou adresse mail :</label><input type="text" class="col-10" name="userNameOrEmail" id="userNameOrEmail" />
+                                    <p><?= isset($errorMessagesForLogin['userNameOrEmail']) ? $errorMessagesForLogin['userNameOrEmail'] : '' ?></p>
                                 </div>
                                 <div>
-                                <label for="userPassword">Mot de passe :</label><input type="password" class="col-10" name="userPassword" id="userPassword" />
-                                <p><?= isset($errorMessagesForLogin['userPassword']) ? $errorMessagesForLogin['userPassword'] : '' ?></p>
+                                    <label for="userPassword">Mot de passe :</label><input type="password" class="col-10" name="userPassword" id="userPassword" />
+                                    <p><?= isset($errorMessagesForLogin['userPassword']) ? $errorMessagesForLogin['userPassword'] : '' ?></p>
                                 </div>
                             </div>
                             <div class="modal-footer">

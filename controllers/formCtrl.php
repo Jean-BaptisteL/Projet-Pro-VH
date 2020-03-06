@@ -24,7 +24,7 @@ if (isset($_POST['addNewUser'])) {
     }
     if (!empty($_POST['password']) && !empty($_POST['confirmPassword'])) {
         if ($_POST['password'] == $_POST['confirmPassword']) {
-            $users->password = password_hash(htmlspecialchars($_POST['password']), PASSWORD_DEFAULT);
+            $users->password = password_hash(htmlspecialchars($_POST['password']), PASSWORD_BCRYPT);
         } else {
             $errorMessages['confirmPassword'] = 'Les deux mots de passe ne sont pas identiques.';
         }
