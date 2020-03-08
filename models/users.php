@@ -60,5 +60,19 @@ class users {
         return $statement->fetch(PDO::FETCH_OBJ);
     }
 
-
+    /**
+     * Methode permettant de modifier les informations d'un utilisateur
+     * @return OBJ
+     */
+    public function updateUserInfos() {
+        $query = 'UPDATE `zui5e_users` '
+                . 'SET `name` = :name, `email` = :email, `password` = :password '
+                . 'WHERE `id` = :id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
+        $statement->bindValue(':email', $this->email, PDO::PARAM_STR);
+        $statement->bindValue(':password', $this->password, PDO::PARAM_STR);
+        $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+        return $statement->execute();
+    }
 }

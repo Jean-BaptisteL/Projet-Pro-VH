@@ -13,43 +13,48 @@ include_once 'controllers/userProfilCtrl.php';
     <a href="?display=spot" class="col-md-2 col-sm-12">Mes Spots</a>
 </div>
 <?php
-if ($_GET['display'] == 'infos') {
+if ($_GET['display'] == 'infos' || empty($_GET['display']) || !isset($_GET['display'])) {
     ?>
-    <h3>Mes informations :</h3>
-    <form>
-        <div class="form-group">
-            <label for="userName">Nom :</label>
-            <div class="row">
-                <input type="text" class="form-control col-md-3 col-sm-12 ml-3" id="userName" name="userName" value="<?= $_SESSION['user']['userName'] ?>" />
+    <div class="row">
+        <h3 class="col-12 text-center" id="infosTitle">Mes informations :</h3>
+        <form class="col-12">
+            <div class="form-group">
+                <label for="userName">Nom :</label>
+                <div class="row">
+                    <input type="text" class="form-control col-md-3 col-sm-12 ml-3" id="userName" name="userName" value="<?= $_SESSION['user']['userName'] ?>" />
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="email">Nom :</label>
-            <div class="row">
-                <input type="text" class="form-control col-md-3 col-sm-12 ml-3" id="email" name="email" value="<?= $_SESSION['user']['email'] ?>" />
+            <div class="form-group">
+                <label for="email">Adresse mail :</label>
+                <div class="row">
+                    <input type="text" class="form-control col-md-3 col-sm-12 ml-3" id="email" name="email" value="<?= $_SESSION['user']['email'] ?>" />
+                </div>
             </div>
-        </div>
-        <p>Modifier mon mot de passe :</p>
-        <div class="form-group">
-            <label for="password">Ancien mot de passe :</label>
-            <div class="row">
-                <input type="password" class="form-control col-md-3 col-sm-12 ml-3" id="password" name="password" />
+            <input type="submit" id="updateUserInfos" name="updateUserInfos" value="Modifier mes informations" />
+        </form>
+        <p id="passwordModification">Modifier mon mot de passe :</p>
+        <form class="col-12">
+            <div class="form-group">
+                <label for="password">Ancien mot de passe :</label>
+                <div class="row">
+                    <input type="password" class="form-control col-md-3 col-sm-12 ml-3" id="password" name="password" />
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="newPassword">Nouveau mot de passe :</label>
-            <div class="row">
-                <input type="newPassword" class="form-control col-md-3 col-sm-12 ml-3" id="newPassword" name="newPassword" />
+            <div class="form-group">
+                <label for="newPassword">Nouveau mot de passe :</label>
+                <div class="row">
+                    <input type="newPassword" class="form-control col-md-3 col-sm-12 ml-3" id="newPassword" name="newPassword" />
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="confirmPassword">Confirmer le nouveau mot de passe :</label>
-            <div class="row">
-                <input type="confirmPassword" class="form-control col-md-3 col-sm-12 ml-3" id="confirmPassword" name="confirmPassword" />
+            <div class="form-group">
+                <label for="confirmPassword">Confirmer le nouveau mot de passe :</label>
+                <div class="row">
+                    <input type="confirmPassword" class="form-control col-md-3 col-sm-12 ml-3" id="confirmPassword" name="confirmPassword" />
+                </div>
             </div>
-        </div>
-        <input type="submit" id="modifyUserInfos" name="modifyUserInfos" value="Modifier mes informations" />
-    </form>
+            <input type="submit" name="updatePassword" id="updatePassword" value="Enregistrer" />
+        </form>
+    </div>
     <?php
 } else if ($_GET['display'] == 'tests') {
     ?>

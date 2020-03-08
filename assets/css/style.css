@@ -71,3 +71,9 @@ article{
 .socialNetwork{
   display: flex;
 }
+#passwordModification{
+    margin-top: 100px;
+}
+#infosTitle{
+    margin-top: 60px;
+}

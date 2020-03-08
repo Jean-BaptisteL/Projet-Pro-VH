@@ -20,7 +20,7 @@ if (isset($_POST['addNewUser'])) {
             $errorMessages['email'] = 'Veuillez entrer une adresse mail valide.';
         }
     } else {
-        $errorMessages['confirmEmail'] = $errorMessages['email'] = 'Veuillez entrer une adresse mail et le confirmer.';
+        $errorMessages['confirmEmail'] = $errorMessages['email'] = 'Veuillez entrer une adresse mail et la confirmer.';
     }
     if (!empty($_POST['password']) && !empty($_POST['confirmPassword'])) {
         if ($_POST['password'] == $_POST['confirmPassword']) {

@@ -26,6 +26,7 @@ if (isset($_POST['userLogin'])) {
             $_SESSION['user']['userName'] = $userInfosForLogin->name;
             $_SESSION['user']['userType'] = $userInfosForLogin->userTypeId;
             $_SESSION['user']['email'] = $userInfosForLogin->email;
+            $_SESSION['user']['password'] = $userInfosForLogin->password;
         } else {
             $errorMessagesForLogin['errorLogin'] = 'Identifiant, adresse mail ou mot de passe incorrectes !';
         }
