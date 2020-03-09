@@ -1,40 +1,80 @@
 <?php
-
-$errorMessages = array();
+if(empty($_SESSION['user'])){
+    header('location: index.php');
+}
+$errorMessagesInfos = array();
+//Modification des informations de l'utilisateur.
 //Vérification du formulaire
 if (isset($_POST['updateUserInfos'])) {
     $users = new users();
+    $users->id = $_SESSION['user']['userId'];
     if (!empty($_POST['userName'])) {
         $users->name = htmlspecialchars($_POST['userName']);
     } else {
-        $errorMessages['userName'] = 'Veuillez entrer un nom d\'utilisateur';
+        $errorMessagesInfos['userName'] = 'Veuillez entrer un nom d\'utilisateur';
     }
     if (!empty($_POST['email'])) {
         if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                $users->email = htmlspecialchars($_POST['email']);
+            $users->email = htmlspecialchars($_POST['email']);
         } else {
-            $errorMessages['email'] = 'Veuillez entrer une adresse mail valide.';
+            $errorMessagesInfos['email'] = 'Veuillez entrer une adresse mail valide.';
         }
     } else {
-        $errorMessages['email'] = 'Veuillez entrer une adresse mail.';
+        $errorMessagesInfos['email'] = 'Veuillez entrer une adresse mail.';
     }
-    if (!empty($_POST['password']) && !empty($_POST['newPassword']) && !empty($_POST['confirmPassword'])) {
-        if ($_POST['password'] == $_POST['confirmPassword']) {
-            $users->password = password_hash(htmlspecialchars($_POST['password']), PASSWORD_BCRYPT);
-        } else {
-            $errorMessages['confirmPassword'] = 'Les deux mots de passe ne sont pas identiques.';
-        }
-    } else {
-        $errorMessages['confirmPassword'] = $errorMessages['password'] = 'Veuillez entrer un mot de passe et le confirmer.';
-    }
-    if (count($errorMessages) == 0) {
+    if (count($errorMessagesInfos) == 0) {
         $user = $users->checkIfUserExists();
-        if ($user->userExists == 0) {
-            //Ajout du nouvel utilisateur
-            $users->addNewUser();
-            $errorMessages['success'] = 'Inscription réussie !';
-        } else {
-            $errorMessages['pseudo'] = $errorMessages['email'] = 'Ce nom ou cette adresse mail existe déjà.';
+        $userName = $users->checkIfUserNameExists();
+        $userEmail = $users->checkIfEmailExists();
+        //Le cas où l'utilisateur veut changer son nom et son adresse mail et qu'ils n'existent pas encore.
+        if ($user->userExists == 0 && $_POST['userName'] != $_SESSION['user']['userName'] && $_POST['userName'] != $_SESSION['user']['email']) {
+            $users->updateUserInfos();
+            $newUserInfos = $users->getUserInfos();
+            $_SESSION['user']['userName'] = $newUserInfos->name;
+            $_SESSION['user']['email'] = $newUserInfos->email;
+            $errorMessagesInfos['success'] = 'Mise à jour réussie !';
+            //Le cas où l'utilisateur veut changer seulement son nom mais que ce dernier existe déjà.
+        } else if ($userName->userNameExists == 1 && $userEmail->emailExists == 1 && $_POST['userName'] != $_SESSION['user']['userName'] && $_POST['email'] == $_SESSION['user']['email']) {
+            $errorMessagesInfos['userName'] = 'Ce nom existe déjà';
+            //Le cas où l'utilisateur veut changer seulement son adresse mail mais que cette dernière existe déjà.
+        } else if ($userName->userNameExists == 1 && $userEmail->emailExists == 1 && $_POST['userName'] == $_SESSION['user']['userName'] && $_POST['email'] != $_SESSION['user']['email']) {
+            $errorMessagesInfos['email'] = 'Cette adresse mail existe déjà';
+            //Le cas où l'utilisateur veut changer seulement son adresse mail et que cette dernière n'existe pas encore.
+        } else if ($userName->userNameExists == 1 && $userEmail->emailExists == 0 && $_POST['userName'] == $_SESSION['user']['userName'] && $_POST['email'] != $_SESSION['user']['email']) {
+            $users->updateUserInfos();
+            $newUserInfos = $users->getUserInfos();
+            $_SESSION['user']['email'] = $newUserInfos->email;
+            $errorMessagesInfos['success'] = 'Mise à jour réussie !';
+            //Le cas où l'utilisateur veut changer seulement son nom et que ce dernier n'existe pas encore.
+        } else if ($userName->userNameExists == 0 && $userEmail->emailExists == 1 && $_POST['userName'] != $_SESSION['user']['userName'] && $_POST['email'] == $_SESSION['user']['email']) {
+            $users->updateUserInfos();
+            $newUserInfos = $users->getUserInfos();
+            $_SESSION['user']['userName'] = $newUserInfos->name;
+            $errorMessagesInfos['success'] = 'Mise à jour réussie !';
+            //Le cas où l'utilisateur veut changer son nom et son adresse mais qu'ils existent déjà.
+        } else if ($userName->userNameExists == 1 && $userEmail->emailExists == 1 && $_POST['userName'] != $_SESSION['user']['userName'] && $_POST['email'] != $_SESSION['user']['email']) {
+            $errorMessagesInfos['userName'] = 'Ce nom existe déjà';
+            $errorMessagesInfos['email'] = 'Cette adresse mail existe déjà';
+        }
+    }
+}
+//Modification du mot de passe.
+$errorMessagesPassword = array();
+if (isset($_POST['updatePassword'])) {
+    $users = new users();
+    if (!empty($_POST['password'])) {
+        $password = htmlspecialchars($_POST['password']);
+    } else {
+        $errorMessagesPassword['password'] = 'Veuillez entrer votre mot de passe.';
+    }
+    if (!empty($_POST['newPassword'])) {
+        if (!empty($_POST['confirmPassword'])) {
+            if ($_POST['newPassword'] == $_POST['confirmPassword']) {
+                $newPassword = htmlspecialchars($_POST['newPassword']);
+                $confirmPassword = htmlspecialchars($_POST['confirmPassword']);
+            }else{
+                $errorMessagesPassword['confirmPassword'] = 'Le mot de passe de confirmation est différent du nouveau mot de passe.';
+            }
         }
     }
 }

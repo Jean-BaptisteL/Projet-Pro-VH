@@ -66,13 +66,52 @@ class users {
      */
     public function updateUserInfos() {
         $query = 'UPDATE `zui5e_users` '
-                . 'SET `name` = :name, `email` = :email, `password` = :password '
+                . 'SET `name` = :name, `email` = :email '
                 . 'WHERE `id` = :id';
         $statement = $this->db->prepare($query);
         $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
         $statement->bindValue(':email', $this->email, PDO::PARAM_STR);
-        $statement->bindValue(':password', $this->password, PDO::PARAM_STR);
         $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
         return $statement->execute();
+    }
+    
+    /**
+     * Methode permettant de modifier le mot de passe d'un utilisateur
+     * @return OBJ
+     */
+    public function updatePassword() {
+        $query = 'UPDATE `zui5e_users` '
+                . 'SET `password` = :password '
+                . 'WHERE `id` = :id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':password', $this->name, PDO::PARAM_STR);
+        $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+        return $statement->execute();
+    }
+    
+    /**
+     * Méthode permettant de savoir si un nom d'utilisateur existe déjà.
+     * @return OBJ
+     */
+    public function checkIfUserNameExists() {
+        $query = 'SELECT COUNT(`id`) AS `userNameExists` FROM `zui5e_users` '
+                . 'WHERE `name` = :name';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_OBJ);
+    }
+    
+    /**
+     * Méthode permettant de savoir si une adresse mail existe déjà.
+     * @return OBJ
+     */
+    public function checkIfEmailExists() {
+        $query = 'SELECT COUNT(`id`) AS `emailExists` FROM `zui5e_users` '
+                . 'WHERE `email` = :email';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':email', $this->email, PDO::PARAM_STR);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_OBJ);
     }
 }
