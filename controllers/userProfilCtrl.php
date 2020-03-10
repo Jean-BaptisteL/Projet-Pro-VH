@@ -1,13 +1,10 @@
 <?php
-if(empty($_SESSION['user'])){
-    header('location: index.php');
-}
+
 $errorMessagesInfos = array();
 //Modification des informations de l'utilisateur.
 //Vérification du formulaire
 if (isset($_POST['updateUserInfos'])) {
     $users = new users();
-    $users->id = $_SESSION['user']['userId'];
     if (!empty($_POST['userName'])) {
         $users->name = htmlspecialchars($_POST['userName']);
     } else {
@@ -26,6 +23,7 @@ if (isset($_POST['updateUserInfos'])) {
         $user = $users->checkIfUserExists();
         $userName = $users->checkIfUserNameExists();
         $userEmail = $users->checkIfEmailExists();
+        $users->id = $_SESSION['user']['userId'];
         //Le cas où l'utilisateur veut changer son nom et son adresse mail et qu'ils n'existent pas encore.
         if ($user->userExists == 0 && $_POST['userName'] != $_SESSION['user']['userName'] && $_POST['userName'] != $_SESSION['user']['email']) {
             $users->updateUserInfos();
@@ -72,9 +70,40 @@ if (isset($_POST['updatePassword'])) {
             if ($_POST['newPassword'] == $_POST['confirmPassword']) {
                 $newPassword = htmlspecialchars($_POST['newPassword']);
                 $confirmPassword = htmlspecialchars($_POST['confirmPassword']);
-            }else{
+            } else {
                 $errorMessagesPassword['confirmPassword'] = 'Le mot de passe de confirmation est différent du nouveau mot de passe.';
             }
+        } else {
+            $errorMessagesPassword['confirmPassword'] = 'Veuillez confirmer le nouveau mot de passe.';
         }
+    } else {
+        $errorMessagesPassword['newPassword'] = 'Veuillez entrer votre nouveau mot de passe.';
+    }
+    if(count($errorMessagesPassword) == 0){
+        if(password_verify($password, $_SESSION['user']['password'])){
+            $users->password = password_hash($newPassword, PASSWORD_BCRYPT);
+            $users->id = $_SESSION['user']['userId'];
+            $users->updatePassword();
+        }else{
+            $errorMessagesPassword['password'] = 'Mot de passe incorrect.';
+        }
+    }
+}
+//Suppression de l'utilisateur:
+if(isset($_POST['deleteConfirmation'])){
+    $users = new users();
+    if(!empty($_POST['deletePassword'])){
+        $deletePassword = htmlspecialchars($_POST['deletePassword']);
+        if(password_verify($deletePassword, $_SESSION['user']['password'])){
+            $users->id = $_SESSION['user']['userId'];
+            $users->deleteUser();
+            unset($_SESSION['user']);
+            header('location: index.php');
+            exit();
+        }else{
+            $errorMessagesForDelete = 'Mot de passe incorrect.';
+        }
+    }else{
+        $errorMessagesForDelete = 'Veuillez entrer votre mot de passe.';
     }
 }

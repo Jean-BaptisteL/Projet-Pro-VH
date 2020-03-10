@@ -27,6 +27,8 @@ if (isset($_POST['userLogin'])) {
             $_SESSION['user']['userType'] = $userInfosForLogin->userTypeId;
             $_SESSION['user']['email'] = $userInfosForLogin->email;
             $_SESSION['user']['password'] = $userInfosForLogin->password;
+            header('location: index.php');
+            exit();
         } else {
             $errorMessagesForLogin['errorLogin'] = 'Identifiant, adresse mail ou mot de passe incorrectes !';
         }
@@ -37,5 +39,6 @@ if (isset($_GET['signOut'])) {
     if ($_GET['signOut'] == 'true') {
         unset($_SESSION['user']);
         header('location: index.php');
+        exit();
     }
 }

@@ -1,9 +1,11 @@
 <?php
+ini_set('session.gc_maxlifetime', 7200);
 session_start();
-session.gc_maxlifetime(7200);
 $pageTitle = 'Profil de ' . $_SESSION['user']['userName'];
-include_once 'includes/header.php';
+include_once 'models/users.php';
+include_once 'controllers/headerCtrl.php';
 include_once 'controllers/userProfilCtrl.php';
+include_once 'includes/header.php';
 ?>
 <h2><?= $_SESSION['user']['userName'] ?></h2>
 <div class="row text-center d-fex justify-content-center bg-light">
@@ -44,21 +46,51 @@ if ($_GET['display'] == 'infos' || empty($_GET['display']) || !isset($_GET['disp
                 <div class="row">
                     <input type="password" class="form-control col-md-3 col-sm-12 ml-3" id="password" name="password" />
                 </div>
+                <p><?= isset($errorMessagesPassword['password']) ? $errorMessagesPassword['password'] : '' ?></p>
             </div>
             <div class="form-group">
                 <label for="newPassword">Nouveau mot de passe :</label>
                 <div class="row">
                     <input type="password" class="form-control col-md-3 col-sm-12 ml-3" id="newPassword" name="newPassword" />
                 </div>
+                <p><?= isset($errorMessagesPassword['newPassword']) ? $errorMessagesPassword['newPassword'] : '' ?></p>
             </div>
             <div class="form-group">
                 <label for="confirmPassword">Confirmer le nouveau mot de passe :</label>
                 <div class="row">
                     <input type="password" class="form-control col-md-3 col-sm-12 ml-3" id="confirmPassword" name="confirmPassword" />
                 </div>
+                <p><?= isset($errorMessagesPassword['confirmPassword']) ? $errorMessagesPassword['confirmPassword'] : '' ?></p>
             </div>
             <input type="submit" name="updatePassword" id="updatePassword" value="Enregistrer" />
         </form>
+    </div>
+    <h3>Suppression du compte :</h3>
+    <p>Si vous le désirez, vous pouvez supprimer votre compte.</p>
+    <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" name="deleteUser" id="deleteUser">Supprimer le compte</button>
+    <!--Modal pour la suppression du compte-->
+    <div class="modal" id="deleteModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Suppression du compte</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body row">
+                    <form action="?display=infos" method="POST">
+                        <div>
+                            <p>Entrez votre mot de passe pour pouvoir supprimer votre compte.</p>
+                            <label for="password">Mot de passe :</label><input type="password" class="col-10" name="deletePassword" id="deletePassword" />
+                            <p><?= isset($errorMessagesForDelete) ? $errorMessagesForDelete : '' ?></p>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <input type="submit" class="btn btn-danger" id="deleteConfirmation" name="deleteConfirmation" value="Supprimer" />
+                </div>
+                </form>
+            </div>
+        </div>
     </div>
     <?php
 } else if ($_GET['display'] == 'tests') {

@@ -18,7 +18,7 @@ class users {
 
     /**
      * Méthode permettant d'enregistrer un nouvel utilisateur
-     * @return bool
+     * @return BOOL
      */
     public function addNewUser() {
         $query = 'INSERT INTO `zui5e_users` (`name`, `email`, `password`, `hash`, `id_zui5e_usersTypes`) '
@@ -62,7 +62,7 @@ class users {
 
     /**
      * Methode permettant de modifier les informations d'un utilisateur
-     * @return OBJ
+     * @return BOOL
      */
     public function updateUserInfos() {
         $query = 'UPDATE `zui5e_users` '
@@ -77,14 +77,14 @@ class users {
     
     /**
      * Methode permettant de modifier le mot de passe d'un utilisateur
-     * @return OBJ
+     * @return BOOL
      */
     public function updatePassword() {
         $query = 'UPDATE `zui5e_users` '
                 . 'SET `password` = :password '
                 . 'WHERE `id` = :id';
         $statement = $this->db->prepare($query);
-        $statement->bindValue(':password', $this->name, PDO::PARAM_STR);
+        $statement->bindValue(':password', $this->password, PDO::PARAM_STR);
         $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
         return $statement->execute();
     }
@@ -113,5 +113,17 @@ class users {
         $statement->bindValue(':email', $this->email, PDO::PARAM_STR);
         $statement->execute();
         return $statement->fetch(PDO::FETCH_OBJ);
+    }
+    
+    /**
+     * Méthode permettant de supprimer un utilisateur.
+     * @return BOOL
+     */
+    public function deleteUser() {
+        $query = 'DELETE FROM `zui5e_users` '
+                . 'WHERE `id` = :id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+        return $statement->execute();
     }
 }

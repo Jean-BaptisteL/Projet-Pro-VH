@@ -1,9 +1,11 @@
 <?php
-
+ini_set('session.gc_maxlifetime', 7200);
 session_start();
 $pageTitle = 'Inscription';
-include_once 'includes/header.php';
+include_once 'models/users.php';
+include_once 'controllers/headerCtrl.php';
 include_once 'controllers/formCtrl.php';
+include_once 'includes/header.php';
 ?>
 <h2 class="registration">Inscription :</h2>
 <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">

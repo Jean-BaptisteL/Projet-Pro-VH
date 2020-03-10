@@ -1,7 +1,4 @@
-<?php
-include_once 'models/users.php';
-include_once 'controllers/headerCtrl.php';
-?>
+
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
     <head>
@@ -27,6 +24,12 @@ include_once 'controllers/headerCtrl.php';
                             <a class="nav-intem nav-link m-0" href="#">Vos réalisations</a>
                             <a class="nav-intem nav-link m-0" href="#">Forum</a>
                             <a class="nav-intem nav-link m-0" href="#">Vos spots</a>
+                            <?php
+                            if (isset($_SESSION['user'])){ ?>
+                                <a class="nav-intem nav-link m-0" href="newArticle.php">Rédiger un nouvel article</a>
+                            <?php
+                            }
+                            ?>
                         </div>
                         <div class="navbar-nav ml-auto">
                             <form class="form-inline" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">

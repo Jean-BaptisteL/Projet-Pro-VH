@@ -1,6 +1,9 @@
 <?php
+ini_set('session.gc_maxlifetime', 7200);
 session_start();
 $pageTitle = 'Projet Drone';
+include_once 'models/users.php';
+include_once 'controllers/headerCtrl.php';
 include_once 'includes/header.php';
 ?>
         <div class="row justify-content-around">
