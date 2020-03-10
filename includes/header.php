@@ -24,10 +24,16 @@
                             <a class="nav-intem nav-link m-0" href="#">Vos réalisations</a>
                             <a class="nav-intem nav-link m-0" href="#">Forum</a>
                             <a class="nav-intem nav-link m-0" href="#">Vos spots</a>
-                            <?php
-                            if (isset($_SESSION['user'])){ ?>
-                                <a class="nav-intem nav-link m-0" href="newArticle.php">Rédiger un nouvel article</a>
-                            <?php
+                            <?php if (isset($_SESSION['user'])) { ?>
+                                <div class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle m-0" href="#" id="dropdownAddArticle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rédiger un nouvel article</a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownAddArticle">
+                                        <a class="dropdown-item" href="newArticle.php?type=tuto">Un tutoriel</a>
+                                        <a class="dropdown-item" href="newArticle.php?type=test">Un test</a>
+                                        <a class="dropdown-item" href="newArticle.php?type=real">Une réalisation</a>
+                                    </div>
+                                </div>
+                                <?php
                             }
                             ?>
                         </div>
