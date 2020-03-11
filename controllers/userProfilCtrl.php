@@ -69,7 +69,6 @@ if (isset($_POST['updatePassword'])) {
         if (!empty($_POST['confirmPassword'])) {
             if ($_POST['newPassword'] == $_POST['confirmPassword']) {
                 $newPassword = htmlspecialchars($_POST['newPassword']);
-                $confirmPassword = htmlspecialchars($_POST['confirmPassword']);
             } else {
                 $errorMessagesPassword['confirmPassword'] = 'Le mot de passe de confirmation est différent du nouveau mot de passe.';
             }

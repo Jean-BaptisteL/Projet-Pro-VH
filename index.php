@@ -16,27 +16,6 @@ include_once 'includes/header.php';
                             <p>Premières phrases de l'article</p>
                         </div>
                     </div>
-                    <div class="row articlesPresentation">
-                        <image class="col-4" src="assets/img/drone.jpg" />
-                        <div class="col-8 articleDescription">
-                            <p class="articleTitle">Titre de l'article</p>
-                            <p>Premières phrases de l'article</p>
-                        </div>
-                    </div>
-                    <div class="row articlesPresentation">
-                    <image class="col-4" src="assets/img/drone.jpg" />
-                        <div class="col-8 articleDescription">
-                            <p class="articleTitle">Titre de l'article</p>
-                            <p>Premières phrases de l'article</p>
-                        </div>
-                    </div>
-                    <div class="row articlesPresentation">
-                    <image class="col-4" src="assets/img/drone.jpg" />
-                        <div class="col-8 articleDescription">
-                            <p class="articleTitle">Titre de l'article</p>
-                            <p>Premières phrases de l'article</p>
-                        </div>
-                    </div>
                 </article>
             </div>
         </div>

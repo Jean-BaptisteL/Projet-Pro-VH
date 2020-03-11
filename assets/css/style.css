@@ -80,3 +80,12 @@ article{
 #updatePassword{
     margin-bottom: 50px;
 }
+#tutoOrTestContent{
+    height: 1000px;
+}
+#byVideo {
+    display: none;
+}
+#byText {
+    display: block;
+}
