@@ -89,3 +89,13 @@ article{
 #byText {
     display: block;
 }
+/*Page d'accueil'*/
+.articleType{
+    height: 70px;
+    font-size: 2em;
+    transform: rotate(10deg);
+    margin-bottom: 0;
+}
+.articleTypeBox{
+    padding-top: 20px;
+}

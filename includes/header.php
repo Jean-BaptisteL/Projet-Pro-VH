@@ -19,9 +19,9 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navigationBar">
                         <div class="navbar-nav">
-                            <a class="nav-intem nav-link m-0" href="#">Tutos</a>
-                            <a class="nav-intem nav-link m-0" href="indexTest.php">Tests</a>
-                            <a class="nav-intem nav-link m-0" href="#">Vos réalisations</a>
+                            <a class="nav-intem nav-link m-0" href="listArticles.php?type=tutos&page=1">Tutos</a>
+                            <a class="nav-intem nav-link m-0" href="listArticles.php?type=tests&page=1">Tests</a>
+                            <a class="nav-intem nav-link m-0" href="listArticles.php?type=real&page=1">Vos réalisations</a>
                             <a class="nav-intem nav-link m-0" href="#">Forum</a>
                             <a class="nav-intem nav-link m-0" href="#">Vos spots</a>
                             <?php if (isset($_SESSION['user'])) { ?>
