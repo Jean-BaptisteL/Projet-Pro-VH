@@ -1,7 +1,12 @@
 <?php
 
+if (!isset($_SESSION['user'])) {
+    header('location: index.php');
+    exit();
+}
 //On vérifie si tous les imputs ont été remplis correctement. Si c'est le cas, les données sont envoyer dans l'instance de la classe "articles".
 //Sinon on crée un message d'erreur.
+$regexLinkVideo = '/^https:\/\/www.youtube.com\/watch?v=[a-zA-Z0-9]{11}$/';
 if (isset($_POST['addNewArticle'])) {
     $articles = new articles();
     $errorMessages = array();
@@ -18,15 +23,27 @@ if (isset($_POST['addNewArticle'])) {
                 $errorMessages['tutoOrTestContent'] = 'Votre article n\'a pas de contenu.';
             }
         } else if ($_POST['articleByTextOrVideo'] == 'video') {
-            $videoLink = str_replace('watch?v=', 'embed/', $_POST['videoLinkTestOrTuto']);
-            $articles->content = htmlspecialchars($videoLink);
+            if (!empty($_POST['videoLinkTestOrTuto'])) {
+                if (preg_match($regexLinkVideo, $_POST['videoLinkTestOrTuto'])) {
+                    $videoLink = str_replace('watch?v=', 'embed/', $_POST['videoLinkTestOrTuto']);
+                    $articles->content = htmlspecialchars($videoLink);
+                } else {
+                    $errorMessages['videoLinkTestOrTuto'] = 'Veuillez entrer un lien de vidéo Youtube valide.';
+                }
+            } else {
+                $errorMessages['videoLinkTestOrTuto'] = 'Veuillez entrer le lien de votre vidéo Youtube.';
+            }
         }
     } else if ($_GET['type'] == 'real') {
         if (!empty($_POST['videoLink'])) {
-            $videoLink = str_replace('watch?v=', 'embed/', $_POST['videoLink']);
-            $articles->content = htmlspecialchars($videoLink);
+            if (preg_match($regexLinkVideo, $_POST['videoLink'])) {
+                $videoLink = str_replace('watch?v=', 'embed/', $_POST['videoLink']);
+                $articles->content = htmlspecialchars($videoLink);
+            } else {
+                $errorMessages['videoLink'] = 'Veuillez entrer un lien de vidéo Youtube valide.';
+            }
         } else {
-            $errorMessages['videoLink'] = 'Veuillez entrer le lien de votre vidéo Youtube';
+            $errorMessages['videoLink'] = 'Veuillez entrer le lien de votre vidéo Youtube.';
         }
     }
 //Si il n'y a pas de messages d'erreur, on appelle la méthode qui enregistre le nouvel article.

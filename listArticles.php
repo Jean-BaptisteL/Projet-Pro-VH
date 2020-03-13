@@ -16,7 +16,7 @@ if ($numberOfArticle > 0) {
             <div class="col-md-6 col-sm-12 text-center">
                 <article class="row articlesPresentation justify-content-around">
                     <div class="col-8 articleDescription">
-                        <h3 class="articleTitle text-center"><a href="article.php?id=<?= $article->id ?>"><?= $article->title ?></a></h2>
+                        <h3 class="articleTitle text-center"><a href="showArticle.php?id=<?= $article->id ?>"><?= $article->title ?></a></h2>
                             <p>Par <?= $article->userName ?> le <?= $article->publicationDate ?></p>
                     </div>
                 </article>

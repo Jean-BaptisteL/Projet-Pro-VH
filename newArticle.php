@@ -47,12 +47,10 @@ include_once 'includes/header.php';
         </div>
         <?php
     }
-    if (!empty($_SESSION['user'])) {
         ?>
         <input class="btn btn-light" type="submit" name="addNewArticle" id="addNewArticle" value="Enregistrer" />
         <p><?= isset($successMessage) ? $successMessage : '' ?></p>
         <?php
-    }
     ?>
 </form>
 <?php

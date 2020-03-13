@@ -17,7 +17,7 @@ if ($numberOfArticles > 0) {
                         <p class="articleType"><strong><?= $article->articleType ?></strong></p>
                     </div>
                     <div class="col-8 articleDescription">
-                        <h2 class="articleTitle text-center"><a href="article.php?id=<?= $article->id ?>"><?= $article->title ?></a></h2>
+                        <h2 class="articleTitle text-center"><a href="showArticle.php?id=<?= $article->id ?>"><?= $article->title ?></a></h2>
                         <p>Par <?= $article->userName ?> le <?= $article->publicationDate ?></p>
                     </div>
                 </article>

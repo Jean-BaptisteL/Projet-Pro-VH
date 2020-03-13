@@ -91,4 +91,17 @@ class articles {
         $statement->execute();
         return $statement->fetch(PDO::FETCH_OBJ);
     }
+    
+    public function getArticleByUserAndType() {
+        $query = 'SELECT SQL_CALC_FOUND_ROWS `zui5e_articles`.`id`, `title`, DATE_FORMAT(`date`, \'%d/%m/%Y\') AS `publicationDate` '
+                . 'FROM `zui5e_articles` '
+                . 'WHERE `id__zui5e_articleType` = :idArticleType AND `id_zui5e_users` = :idUsers '
+                . 'ORDER BY `id` DESC '
+                . 'LIMIT 10 OFFSET :offset';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':idArticleType', $this->idArticleType, PDO::PARAM_INT);
+        $statement->bindValue(':idUsers', $this->idUsers, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_OBJ);
+    }
 }

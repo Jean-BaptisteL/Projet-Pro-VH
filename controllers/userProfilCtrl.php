@@ -1,4 +1,13 @@
 <?php
+if(!isset($_SESSION['user'])){
+    header('location: index.php');
+    exit();
+}
+//Si l'utilisateur supprime le GET, une redirection est effectuée.
+if(!isset($_GET['display']) || empty($_GET['display'])){
+    header('location: userProfil.php?display=infos');
+    exit();
+}
 
 $errorMessagesInfos = array();
 //Modification des informations de l'utilisateur.
@@ -105,4 +114,24 @@ if(isset($_POST['deleteConfirmation'])){
     }else{
         $errorMessagesForDelete = 'Veuillez entrer votre mot de passe.';
     }
+}
+//Affichage des articles de l'utilisateur triés par type.
+if($_GET['display'] == 'tests'){
+    $articles = new articles();
+    $articles->idUsers = $_SESSION['user']['userId'];
+    $articles->idArticleType = 1;
+    $articlesList = $articles->getArticleByUserAndType();
+    $numberOfArticles = $articles->getNumberOfArticles();
+} else if($_GET['display'] == 'tutos'){
+    $articles = new articles();
+    $articles->idUsers = $_SESSION['user']['userId'];
+    $articles->idArticleType = 2;
+    $articlesList = $articles->getArticleByUserAndType();
+    $numberOfArticles = $articles->getNumberOfArticles();
+}else if($_GET['display'] == 'produc'){
+    $articles = new articles();
+    $articles->idUsers = $_SESSION['user']['userId'];
+    $articles->idArticleType = 3;
+    $articlesList = $articles->getArticleByUserAndType();
+    $numberOfArticles = $articles->getNumberOfArticles();
 }

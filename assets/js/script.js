@@ -45,9 +45,11 @@ function rechangeColorTwitter() {
 }
 
 //Permet d'afficher ou de cacher l'input choisit lors de la création d'un article.
-document.getElementById('articleByTextOrVideo').addEventListener('change', function () {
-    let styleText = this.value == 'text' ? 'block' : 'none';
-    document.getElementById('byText').style.display = styleText;
-    let styleVideo = this.value == 'video' ? 'block' : 'none';
-    document.getElementById('byVideo').style.display = styleVideo;
-});
+if (document.getElementById('articleByTextOrVideo') != null) {
+    document.getElementById('articleByTextOrVideo').addEventListener('change', function () {
+        let styleText = this.value == 'text' ? 'block' : 'none';
+        document.getElementById('byText').style.display = styleText;
+        let styleVideo = this.value == 'video' ? 'block' : 'none';
+        document.getElementById('byVideo').style.display = styleVideo;
+    });
+}
