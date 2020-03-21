@@ -87,6 +87,7 @@ if ($_GET['display'] == 'infos' || empty($_GET['display']) || !isset($_GET['disp
         </div>
     </div>
     <?php
+    //Affichage des articles de l'utilisateur.
 } else if ($_GET['display'] == 'tests' || $_GET['display'] == 'tutos' || $_GET['display'] == 'produc') {
     if ($numberOfArticles > 0) {
         foreach ($articlesList as $article) {
@@ -97,6 +98,10 @@ if ($_GET['display'] == 'infos' || empty($_GET['display']) || !isset($_GET['disp
                         <div class="col-8 articleDescription">
                             <h3 class="articleTitle text-center"><a href="showArticle.php?id=<?= $article->id ?>"><?= $article->title ?></a></h2>
                                 <p>Le <?= $article->publicationDate ?></p>
+                        </div>
+                        <div class="col-md-2 col-sm-12 my-auto">
+                            <a class="btn btn-secondary" href="updateArticle.php?id=<?= $article->id ?>">Modifier</a>
+                            <button class="btn btn-danger deleteModalButton" data-toggle="modal" data-target="#deleteArticleModal" data-id="<?= $article->id ?>">Supprimer</button>
                         </div>
                     </article>
                 </div>
@@ -109,34 +114,55 @@ if ($_GET['display'] == 'infos' || empty($_GET['display']) || !isset($_GET['disp
             //Pagination
             if ($page > 1) {
                 ?>
-                <a href="listArticles.php?type=<?= $_GET['type'] ?>&page=<?= $page - 1 ?>" class="btn btn-light">Page précédente</a>
+                <a href="userProfil.php?display=<?= $_GET['display'] ?>&page=<?= $page - 1 ?>" class="btn btn-light">Page précédente</a>
                 <?php
             }
             for ($infPages = 3; $infPages >= 1; $infPages--) {
                 if ($page - $infPages >= 1) {
                     ?>
-                    <a href="listArticles.php?type=<?= $_GET['type'] ?>&page=<?= $page - $infPages ?>" class="btn btn-light"><?= $page - $infPages; ?></a>
+                    <a href="userProfil.php?display=<?= $_GET['display'] ?>&page=<?= $page - $infPages ?>" class="btn btn-light"><?= $page - $infPages; ?></a>
                     <?php
                 }
             }
             ?>
-            <a href="listArticles.php?type=<?= $_GET['type'] ?>&page=<?= $page ?>" class="btn btn-primary"><?= $page; ?></a>
+            <a href="userProfil.php?display=<?= $_GET['display'] ?>&page=<?= $page ?>" class="btn btn-primary"><?= $page; ?></a>
             <?php
             for ($supPages = 1; $supPages <= 3; $supPages++) {
                 if ($page + $supPages <= $numberOfPages) {
                     ?>
-                    <a href="listArticles.php?type=<?= $_GET['type'] ?>&page=<?= $page + $supPages ?>" class="btn btn-light"><?= $page + $supPages; ?></a><?php } ?>
+                    <a href="userProfil.php?display=<?= $_GET['display'] ?>&page=<?= $page + $supPages ?>" class="btn btn-light"><?= $page + $supPages; ?></a><?php } ?>
                 <?php
             }
             if ($page < $numberOfPages) {
                 ?>
-                <a href="listArticles.php?type=<?= $_GET['type'] ?>&page=<?= $page + 1 ?>" class="btn btn-light">Page suivante</a>
+                <a href="userProfil.php?display=<?= $_GET['display'] ?>&page=<?= $page + 1 ?>" class="btn btn-light">Page suivante</a>
                 <?php
             }
             ?>
         </div>
-        <?php } else {
-            ?>
+        <!--Modal de suppression d'article-->
+        <div class="modal" id="deleteArticleModal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Suppression</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    </div>
+                    <div class="modal-body row">
+                        <p>Voulez-vous vraiment supprimer cet article ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <form action="#" method="POST">
+                            <input type="hidden" name="articleId" id="articleId" value="" />
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            <input type="submit" class="btn btn-primary" id="deleteArticle" name="deleteArticle" value="Confirmer" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php } else {
+        ?>
         <h3>C'est encore vide ici.</h3>
         <?php
     }

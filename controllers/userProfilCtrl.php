@@ -1,10 +1,11 @@
 <?php
-if(!isset($_SESSION['user'])){
+
+if (!isset($_SESSION['user'])) {
     header('location: index.php');
     exit();
 }
 //Si l'utilisateur supprime le GET, une redirection est effectuée.
-if(!isset($_GET['display']) || empty($_GET['display'])){
+if (!isset($_GET['display']) || empty($_GET['display'])) {
     header('location: userProfil.php?display=infos');
     exit();
 }
@@ -87,51 +88,60 @@ if (isset($_POST['updatePassword'])) {
     } else {
         $errorMessagesPassword['newPassword'] = 'Veuillez entrer votre nouveau mot de passe.';
     }
-    if(count($errorMessagesPassword) == 0){
-        if(password_verify($password, $_SESSION['user']['password'])){
+    if (count($errorMessagesPassword) == 0) {
+        if (password_verify($password, $_SESSION['user']['password'])) {
             $users->password = password_hash($newPassword, PASSWORD_BCRYPT);
             $users->id = $_SESSION['user']['userId'];
             $users->updatePassword();
-        }else{
+        } else {
             $errorMessagesPassword['password'] = 'Mot de passe incorrect.';
         }
     }
 }
 //Suppression de l'utilisateur:
-if(isset($_POST['deleteConfirmation'])){
+if (isset($_POST['deleteConfirmation'])) {
     $users = new users();
-    if(!empty($_POST['deletePassword'])){
+    if (!empty($_POST['deletePassword'])) {
         $deletePassword = htmlspecialchars($_POST['deletePassword']);
-        if(password_verify($deletePassword, $_SESSION['user']['password'])){
+        if (password_verify($deletePassword, $_SESSION['user']['password'])) {
             $users->id = $_SESSION['user']['userId'];
             $users->deleteUser();
             unset($_SESSION['user']);
             header('location: index.php');
             exit();
-        }else{
+        } else {
             $errorMessagesForDelete = 'Mot de passe incorrect.';
         }
-    }else{
+    } else {
         $errorMessagesForDelete = 'Veuillez entrer votre mot de passe.';
     }
 }
 //Affichage des articles de l'utilisateur triés par type.
-if($_GET['display'] == 'tests'){
-    $articles = new articles();
-    $articles->idUsers = $_SESSION['user']['userId'];
+if (isset($_GET['page']) && filter_var($_GET['page'], FILTER_VALIDATE_INT)) {
+    $page = $_GET['page'];
+} else if (!isset($_GET['page'])) {
+    $page = $_GET['page'] = 1;
+}
+$articles = new articles();
+if ($_GET['display'] == 'tests') {
     $articles->idArticleType = 1;
-    $articlesList = $articles->getArticleByUserAndType();
-    $numberOfArticles = $articles->getNumberOfArticles();
-} else if($_GET['display'] == 'tutos'){
-    $articles = new articles();
-    $articles->idUsers = $_SESSION['user']['userId'];
+} else if ($_GET['display'] == 'tutos') {
     $articles->idArticleType = 2;
-    $articlesList = $articles->getArticleByUserAndType();
-    $numberOfArticles = $articles->getNumberOfArticles();
-}else if($_GET['display'] == 'produc'){
-    $articles = new articles();
-    $articles->idUsers = $_SESSION['user']['userId'];
+} else if ($_GET['display'] == 'produc') {
     $articles->idArticleType = 3;
-    $articlesList = $articles->getArticleByUserAndType();
+}
+if ($_GET['display'] == 'tests' || $_GET['display'] == 'tutos' || $_GET['display'] == 'produc') {
+    $offset = ($page - 1) * 10;
+    $articles->idUsers = $_SESSION['user']['userId'];
+    $articlesList = $articles->getArticleByUserAndType($offset);
     $numberOfArticles = $articles->getNumberOfArticles();
+    $numberOfPages = ceil($numberOfArticles / 10);
+}
+//Suppression d'un article :
+//Si l'input type submit a été pressé, j'appelle la méthode "deleteArticle" qui supprime l'article puis je rafraichis la page.
+if (isset($_POST['deleteArticle'])){
+    $articles->id = $_POST['articleId'];
+    $articles->idUsers = $_SESSION['user']['userId'];
+    $articles->deleteArticle();
+    header('location: userProfil.php?display=' . $_GET['display']);
 }

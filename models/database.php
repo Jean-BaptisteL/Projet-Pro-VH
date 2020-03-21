@@ -3,11 +3,14 @@ class database {
     public $db = NULL;
     private static $instance = NULL;
     
+    /**On crée un objet PDO qui représente une connexion à la base de données.
+     * Si la connexion échoue, une erreur est retournée grâce au try catch.
+     */
     public function __construct() {
         try {
-            $this->db = new PDO('mysql:host=localhost;dbname=projetDrone;charset=utf8', 'root', 'infiltrator', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+            $this->db = new PDO('mysql:host=localhost:3308;dbname=projetdrone;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         } catch (PDOException $ex) {
-            die('Une erreur au niveau de la base de donnée s\'est produite !' . $ex->getMessage());
+            die('Une erreur au niveau de la base de donnée s\'est produite ! -> ' . $ex->getMessage());
         }
     }
     /**

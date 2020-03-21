@@ -53,3 +53,14 @@ if (document.getElementById('articleByTextOrVideo') != null) {
         document.getElementById('byVideo').style.display = styleVideo;
     });
 }
+
+/*Transfert de l'id d'un article d'un bouton vers l'input d'une modal.
+ * getElementsByClassName retourne une liste d'éléments, il faut donc parcourir la liste pour ajouter les listener.
+ */
+let list = document.getElementsByClassName('deleteModalButton'), li = list.length, i;
+for (i = 0; i < li; i++) {
+    list[i].addEventListener("click", function () {
+        idArticle = this.getAttribute('data-id');
+        document.getElementById('articleId').value = idArticle;
+    });
+}

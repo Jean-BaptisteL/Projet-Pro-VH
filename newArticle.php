@@ -22,6 +22,7 @@ include_once 'includes/header.php';
         ?>
     <div class="form-group">
             <label for="articleByTextOrVideo">Sous quel format voulez-vous publier votre <?= $_GET['type'] == 'tuto' && isset($_GET['type']) ? 'tutoriel' : 'test' ?> ? </label>
+            <!--Si l'option text est choisie alors un textarea apparait sinon c'est un input type text.-->
             <select class="form-control col-md-2 col-sm-12" id="articleByTextOrVideo" name="articleByTextOrVideo">
                 <option value="text">Format texte</option>
                 <option value="video">Format vidéo Youtube</option>
@@ -30,10 +31,11 @@ include_once 'includes/header.php';
         <div class="form-group" id="byText">
             <label for="tutoOrTestContent">Vous pouvez rédiger ici votre <?= $_GET['type'] == 'tuto' && isset($_GET['type']) ? 'tutoriel' : 'test' ?> :</label>
             <textarea name="tutoOrTestContent" id="tutoOrTestContent"><?= isset($_POST['tutoOrTestContent']) ? $_POST['tutoOrTestContent'] : '' ?></textarea>
+            <!--Grâce à un API, les textarea sont équipé d'un éditeur de texte-->
             <p><?= isset($errorMessages['tutoOrTestContent']) ? $errorMessages['tutoOrTestContent'] : '' ?></p>
         </div>
         <div class="form-group" id="byVideo">
-            <label for="videoLinkTestOrTuto">Lien de votre vidéo Youtube :</label>
+            <label for="videoLinkTestOrTuto">URL de votre vidéo Youtube :</label>
             <input class="form-control col-md-4 col-sm-12" type="text" name="videoLinkTestOrTuto" id="videoLinkTestOrTuto" class="form-control" />
             <p><?= isset($errorMessages['videoLinkTestOrTuto']) ? $errorMessages['videoLinkTestOrTuto'] : '' ?></p>
         </div>

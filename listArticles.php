@@ -3,8 +3,8 @@ ini_set('session.gc_maxlifetime', 7200);
 session_start();
 include_once 'models/users.php';
 include_once 'models/articles.php';
-include_once 'controllers/listArticlesCtrl.php';
 include_once 'controllers/headerCtrl.php';
+include_once 'controllers/listArticlesCtrl.php';
 include_once 'includes/header.php';
 ?>
 <h2 class="text-center"><?= $pageTitle ?></h2>
@@ -17,7 +17,7 @@ if ($numberOfArticle > 0) {
                 <article class="row articlesPresentation justify-content-around">
                     <div class="col-8 articleDescription">
                         <h3 class="articleTitle text-center"><a href="showArticle.php?id=<?= $article->id ?>"><?= $article->title ?></a></h2>
-                            <p>Par <?= $article->userName ?> le <?= $article->publicationDate ?></p>
+                        <p>Par <strong><?= $article->userName ?></strong> le <?= $article->publicationDate ?></p>
                     </div>
                 </article>
             </div>
