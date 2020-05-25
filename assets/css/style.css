@@ -102,3 +102,6 @@ article{
 #newTextContent{
     height: 700px;
 }
+.bodyPage{
+    min-height: 100vh;
+}

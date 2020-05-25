@@ -6,6 +6,9 @@ include_once 'models/articles.php';
 include_once 'controllers/indexCtrl.php';
 include_once 'controllers/headerCtrl.php';
 include_once 'includes/header.php';
+?>
+<div class="bodyPage">
+<?php
 //Si le nombre d'articles enregistrés dans la base de données est suppérieur à 0,
 //alors j'affiche les articles à l'aide d'une boucle foreach qui parcourt le tableau d'objet obtenu lors de l'appel de la méthode.
 if ($numberOfArticles > 0) {
@@ -32,5 +35,8 @@ if ($numberOfArticles > 0) {
 <h2>Aucun article n'a encore été publié sur le site !</h2>
 <?php
 }
+?>
+</div>
+<?php
     include_once 'includes/footer.php';
     

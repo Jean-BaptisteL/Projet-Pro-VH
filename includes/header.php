@@ -38,17 +38,18 @@
                             ?>
                         </div>
                         <div class="navbar-nav ml-auto">
-                            <form class="form-inline" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                                <div class="input-group">
+                            <div class="input-group">
+                                <form class="form-inline" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                                     <input type="text" class="form-control" placeholder="Rechercher" name="search">
                                     <div class="input-group-btn">
                                         <button id="searchBtn" class="btn btn-primary" type="submit">
                                             <i class="fas fa-search"></i>
                                         </button>
                                     </div>
-                            </form>
-                            <a class="nav-intem nav-link m-0" href="<?= isset($_SESSION['user']) ? 'userProfil.php?display=infos' : 'form.php' ?>"><i class="<?= isset($_SESSION['user']) ? 'fas fa-user' : 'fas fa-user-plus' ?>"></i><?= isset($_SESSION['user']) ? ' Mon profil' : ' Inscription' ?></a>
-                            <a class="nav-intem nav-link m-0" href="<?= isset($_SESSION['user']) ? '?signOut=true' : '#' ?>" <?= isset($_SESSION['user']) ? '' : 'data-toggle="modal" data-target="#loginModal"' ?>><i class="<?= isset($_SESSION['user']) ? 'fas fa-sign-out-alt' : ' fas fa-sign-in-alt' ?>"></i><?= isset($_SESSION['user']) ? ' Déconnexion' : ' Connexion' ?></a>
+                                </form>
+                                <a class="nav-intem nav-link m-0" href="<?= isset($_SESSION['user']) ? 'userProfil.php?display=infos' : 'form.php' ?>"><i class="<?= isset($_SESSION['user']) ? 'fas fa-user' : 'fas fa-user-plus' ?>"></i><?= isset($_SESSION['user']) ? ' Mon profil' : ' Inscription' ?></a>
+                                <a class="nav-intem nav-link m-0" href="<?= isset($_SESSION['user']) ? '?signOut=true' : '#' ?>" <?= isset($_SESSION['user']) ? '' : 'data-toggle="modal" data-target="#loginModal"' ?>><i class="<?= isset($_SESSION['user']) ? 'fas fa-sign-out-alt' : ' fas fa-sign-in-alt' ?>"></i><?= isset($_SESSION['user']) ? ' Déconnexion' : ' Connexion' ?></a>
+                            </div>
                         </div>
                     </div>
                 </nav>

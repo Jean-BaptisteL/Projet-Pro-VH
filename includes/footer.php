@@ -8,7 +8,7 @@
             <a href="https://www.instagram.com" id="instagramIcon"><i class="fab fa-instagram"></i></a>
         </div>
         <div id="twitter" class="text-center">
-            <a href="https://www.twitter.com" id="twitterIcon"><i class="fab fa-twitter"></i></i></a>
+            <a href="https://www.twitter.com" id="twitterIcon"><i class="fab fa-twitter"></i></a>
         </div>
     </div>
 </footer>
